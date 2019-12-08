@@ -7,7 +7,6 @@ def get_key(val, my_dict=None):
 if __name__ == "__main__":
     with open('input', 'r') as file:
         list_all = list(map(lambda str:str.strip().split(")"), file.readlines()))
-        # list_name = list_all.split(')')
         items = dict()
 
         for i in list_all:
@@ -16,23 +15,32 @@ if __name__ == "__main__":
 
         print(list_all)
         print(items)
-
         all_dist = 0
+        list_YOU_key = []
+        list_SAN_key = []
         for j in items.keys():
-            ok = False
-            dist = 0
-            cur_item = j
             for k in items[j]:
+                dist = 0
+                cur_item = j
+                ok = False
                 while not ok:
                     dist += 1
                     if cur_item == "COM":
                         ok = True
                     else:
                         tmp_dict = items.copy()
+                        if k == "YOU":
+                            list_YOU_key.append(cur_item)
+                        if k == "SAN":
+                            list_SAN_key.append(cur_item)
                         cur_item = get_key(cur_item, tmp_dict)
 
                 all_dist += dist
 
-        print(all_dist)
+        print(list_YOU_key)
+        print(list_SAN_key)
+        list_intersection = [value for value in list_YOU_key if value in list_SAN_key]
+        print(list_intersection[0])
+        print(list_YOU_key.index(list_intersection[0]) + list_SAN_key.index(list_intersection[0]))
 
 
